@@ -35,7 +35,6 @@ def process_soups(soups, codes=[95070, 95129]):
     for code in codes:
         iters = len(soups[code])
         for i in range(iters):
-            print(i)
             obj = json.loads(soups[code][i].find_all('script', {'type': 
                 'application/json'})[1].string.strip('<>--!'))['cat1']['searchResults']['listResults']
             homes = standardize_dicts(obj)
@@ -50,9 +49,10 @@ def create_df(list_of_homes):
     return pd.DataFrame(list_of_homes)
 
 def create_csv(dataframe):
+    file_path = 'data/'
     title = 'homes '
     time = datetime.now().strftime('%Y-%m-%d-%H_%M')
     file_type = '.csv'
-    name = title + time + file_type
+    name = file_path + title + time + file_type
 
     return dataframe.to_csv(name)
